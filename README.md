@@ -76,7 +76,7 @@ The project covers every stage of the analytics pipeline — from a messy, misna
 
 ## Part 2 — Python ETL Pipeline
 
-![Python ETL Success]()
+![Python ETL Success](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/PYTHON%20ETL%20SUCCESS.png)
 
 ### Script: `load_to_mysql.py`
 
