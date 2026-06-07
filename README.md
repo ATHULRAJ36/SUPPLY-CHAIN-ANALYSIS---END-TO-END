@@ -8,7 +8,7 @@
 
 A full end-to-end supply chain analytics project built on a real-world dataset of **11,340 orders** across **5 suppliers**, **3 product types**, **4 transportation modes** and **5 warehouse locations** across India.
 
-The project covers every stage of the analytics pipeline — from a messy, misnamed raw Excel file to a 5-page interactive Power BI dashboard with 20+ DAX measures.
+The project covers every stage of the analytics pipeline — from a messy, misnamed raw Excel file to a 4-page interactive Power BI dashboard with 20+ DAX measures.
 
 ---
 
