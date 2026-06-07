@@ -239,7 +239,7 @@ A fully normalized relational database with 7 tables, proper primary keys, forei
 5-page interactive dashboard with **DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
 
 ## MODEL VIEW
-()
+![MODEL VIEW](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/MODEL%20VIEW.png)
 
 ### Page 1 — Executive Summary
 
