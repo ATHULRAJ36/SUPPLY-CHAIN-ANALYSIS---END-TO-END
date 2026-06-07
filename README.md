@@ -371,3 +371,15 @@ IF([Stockout Risk %] > 15, "Urgent",
 | Business Intelligence | KPI design, dashboard layout, slicer sync, bookmarks |
 
 ---
+## Key Business Insights
+
+Skincare products generated the highest revenue contribution.
+Female customers contributed more revenue than male customers.
+Supplier performance varied significantly in lead time, quality, and logistics costs.
+Certain locations maintained higher inventory levels than others.
+Transportation and logistics costs represented a major component of operational expenses.
+Inventory health metrics helped identify potential stock-out risks and supplier dependencies.
+
+## Outcome
+
+The project demonstrates an end-to-end Supply Chain Analytics solution, covering the complete analytics lifecycle from data cleaning and ETL processing to SQL analysis and Power BI dashboard visualization, enabling data-driven decision-making across inventory, supplier, logistics, and revenue operations.
