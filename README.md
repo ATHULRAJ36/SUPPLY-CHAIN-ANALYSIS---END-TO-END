@@ -76,7 +76,7 @@ The project covers every stage of the analytics pipeline — from a messy, misna
 
 ## Part 2 — Python ETL Pipeline
 
-![Python ETL Success](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/PYTHON%20ETL%20SUCCESS.png)
+![Python ETL Success](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/PYTHON%20ETL%20SUCCESS.png)
 
 ### Script: `load_to_mysql.py`
 
@@ -239,11 +239,11 @@ A fully normalized relational database with 7 tables, proper primary keys, forei
 5-page interactive dashboard with **DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
 
 ## MODEL VIEW
-![MODEL VIEW](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/MODEL%20VIEW.png)
+![MODEL VIEW](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/MODEL%20VIEW.png)
 
 ### Page 1 — Executive Summary
 
-![Executive Summary](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/EXECUTIVE%20SUMMERY.png)
+![Executive Summary](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/EXECUTIVE%20SUMMERY.png)
 
 **Visuals:**
 - 4 KPI  cards — Total Revenue, Total Orders, Units Sold, Total Stock Level
@@ -263,7 +263,7 @@ Revenue per Order = DIVIDE([Total Revenue], COUNTROWS(orders))
 
 ### Page 2 — Supplier Scorecard
 
-![Supplier Scorecard](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLIER%20SCORECARD.png)
+![Supplier Scorecard](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/SUPPLIER%20SCORECARD.png)
 
 **Visuals:**
 - 3 KPI cards — Total Suppliers, Best Supplier, Avg Rating
@@ -288,7 +288,7 @@ SWITCH(TRUE(),
 ```
 ### Page 3 — Logistics Analysis
 
-![Logistics Analysis](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/LOGISTIC%20ANALYSIS.png)
+![Logistics Analysis](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/LOGISTIC%20ANALYSIS.png)
 
 **Visuals:**
 - 4 KPI cards — Total Logistics Cost, Avg Defect rate, Total Manufacturing rate, Total shipping Cost
@@ -313,7 +313,7 @@ SWITCH(TRUE(),
 
 ### Page 4 — Inventory Health
 
-![Inventory Health](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/INVENTORY%20HEALTH.png)
+![Inventory Health](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/INVENTORY%20HEALTH.png)
 
 **Visuals:**
 - 3 KPI cards — Total Stock, Stockout Risk Orders, Avg Availability
