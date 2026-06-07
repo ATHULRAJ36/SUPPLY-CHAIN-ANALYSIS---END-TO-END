@@ -138,11 +138,11 @@ python load_to_mysql.py
 
 ## Part 3 — Power BI Dashboard
 
-5-page interactive dashboard with **80+ DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
+5-page interactive dashboard with **DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
 
 ### Page 1 — Executive Summary
 
-![Executive Summary](images/dashboard/01_executive_summary.png)
+![Executive Summary](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/EXECUTIVE%20SUMMERY.png)
 
 **Visuals:**
 - 5 KPI cards — Total Revenue, Total Orders, Units Sold, Avg Price, Revenue per Order
