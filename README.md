@@ -135,10 +135,111 @@ python load_to_mysql.py
   [OK] inventory  :  11,340 rows
   [OK] logistics  :  11,340 rows
 ```
+## Part 3 — MySQL Database Design
 
-## Part 3 — Power BI Dashboard
+### What I built
+A fully normalized relational database with 7 tables, proper primary keys, foreign key constraints and correct data types for every column.
+
+### What I learned
+
+**Database design concepts:**
+- What normalization means and why it matters
+- Difference between dimension tables and fact tables
+- How to design a star schema for analytics
+- How to define primary keys and foreign keys
+- Why foreign key constraints prevent bad data
+- How to choose correct data types — DECIMAL for money, INT for quantities, VARCHAR for text
+
+**SQL concepts learned and applied:**
+
+| Concept | What I used it for |
+|---|---|
+| CREATE TABLE | Built all 7 tables with correct structure |
+| PRIMARY KEY | Uniquely identified every row in every table |
+| FOREIGN KEY | Linked fact tables to dimension tables |
+| REFERENCES | Connected orders to products, suppliers, carriers, routes |
+| ENGINE=InnoDB | Enabled foreign key support in MySQL |
+| DROP TABLE IF EXISTS | Safely dropped tables before reloading |
+| SET FOREIGN_KEY_CHECKS | Managed FK constraints during bulk operations |
+
+**Data types I used:**
+
+| Type | Used for |
+|---|---|
+| INT | IDs, quantities, stock levels, lead times |
+| DECIMAL(10,2) | Prices, shipping costs, manufacturing costs |
+| DECIMAL(12,2) | Revenue (larger range needed) |
+| DECIMAL(6,4) | Defect rates (small decimal precision) |
+| DECIMAL(8,4) | Quality scores |
+| VARCHAR(10) | Short text — gender, inspection result |
+| VARCHAR(50) | Medium text — product type, supplier name |
+| VARCHAR(100) | Longer text — warehouse location |
+| TINYINT | Boolean flag — data_quality_flag (0 or 1) |
+
+---
+
+## Part 4 — SQL Analysis
+
+### What I learned
+
+**Basic SQL — single table:**
+
+| Concept | What I used it for |
+|---|---|
+| SELECT | Retrieve data from tables |
+| FROM | Specify which table to query |
+| WHERE | Filter rows by condition |
+| ORDER BY | Sort results ascending or descending |
+| GROUP BY | Group rows to aggregate data |
+| COUNT() | Count total rows or orders |
+| SUM() | Add up revenue and costs |
+| AVG() | Calculate average prices and defect rates |
+| ROUND() | Format decimal numbers cleanly |
+| DISTINCT | Get unique values from a column |
+| LIMIT | Return only top N results |
+
+**Intermediate SQL — multi table:**
+
+| Concept | What I used it for |
+|---|---|
+| JOIN | Connected orders to products, suppliers, routes |
+| USING() | Cleaner JOIN syntax when column names match |
+| Multiple JOINs | Linked 3 and 4 tables in a single query |
+| Aliases (o, p, s, l) | Shortened table names for readability |
+| Aggregate + JOIN | Combined SUM and AVG across joined tables |
+| HAVING | Filtered grouped results after aggregation |
+
+**Advanced SQL — window functions and CTEs:**
+
+| Concept | What I used it for |
+|---|---|
+| RANK() | Ranked suppliers by revenue and defect rate |
+| OVER() | Defined the window for ranking functions |
+| PARTITION BY | Reset ranking within each warehouse location |
+| ORDER BY inside OVER | Controlled ranking direction |
+| WITH (CTE) | Broke complex queries into readable steps |
+| CROSS JOIN | Combined CTE results with overall averages |
+| Subqueries | Used inside WHERE and SELECT clauses |
+| Window SUM | Calculated percentage of total in one query |
+
+**Analysis topics covered:**
+- Revenue breakdown by product type and supplier
+- Defect rate ranking across all 5 suppliers
+- Shipping cost comparison by transport mode
+- Stockout risk orders where demand exceeds stock
+- Inspection pass, fail and pending breakdown with percentages
+- Top supplier per warehouse location using PARTITION BY
+- Suppliers above average defect rate using CTE
+- Full supplier scorecard combining all 5 tables in one query
+
+---
+
+## Part 5 — Power BI Dashboard
 
 5-page interactive dashboard with **DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
+
+## MODEL VIEW
+()
 
 ### Page 1 — Executive Summary
 
@@ -164,7 +265,7 @@ Revenue per Order = DIVIDE([Total Revenue], COUNTROWS(orders))
 
 ### Page 2 — Supplier Scorecard
 
-![Supplier Scorecard](images/dashboard/02_supplier_scorecard.png)
+![Supplier Scorecard](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLIER%20SCORECARD.png)
 
 **Visuals:**
 - 4 KPI cards — Total Suppliers, Best Supplier, Worst Defect Supplier, Avg Rating
@@ -188,39 +289,9 @@ SWITCH(TRUE(),
     "Low Risk"
 )
 ```
+### Page 3 — Logistics Analysis
 
----
-
-### Page 3 — Quality Control
-
-![Quality Control](images/dashboard/03_quality_control.png)
-
-**Visuals:**
-- 5 KPI cards — Pass Rate %, Fail Rate %, Avg Defect Rate, Avg Quality Score, High Risk Orders
-- Inspection results breakdown — column chart
-- Defect rate by product type — color coded bar chart
-- Quality score by supplier — bar chart
-- Quality control matrix — full width with conditional formatting
-- Pass rate by location — column chart with 70% target line
-- Failed high revenue orders — card and table
-- 4 synced slicers
-
-**Key DAX measures:**
-```dax
-Pass Rate % = DIVIDE([Pass Count], COUNTROWS(logistics)) * 100
-Defect Status =
-SWITCH(TRUE(),
-    [Avg Defect Rate] > 0.08, "High Risk",
-    [Avg Defect Rate] > 0.05, "Medium Risk",
-    "Low Risk"
-)
-```
-
----
-
-### Page 4 — Logistics Analysis
-
-![Logistics Analysis](images/dashboard/04_logistics_analysis.png)
+![Logistics Analysis](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/LOGISTIC%20ANALYSIS.png)
 
 **Visuals:**
 - 5 KPI cards — Total Logistics Cost, Avg Shipping Cost, Cheapest Mode, Avg Mfg Lead Time, Slow Orders
@@ -245,9 +316,9 @@ SWITCH(TRUE(),
 
 ---
 
-### Page 5 — Inventory Health
+### Page 4 — Inventory Health
 
-![Inventory Health](images/dashboard/05_inventory_health.png)
+![Inventory Health](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/INVENTORY%20HEALTH.png)
 
 **Visuals:**
 - 4 KPI cards — Total Stock, Stockout Risk Orders, Avg Availability, Negative Availability
@@ -281,12 +352,7 @@ IF([Stockout Risk %] > 15, "Urgent",
 - 5 suppliers across 5 Indian cities: Mumbai, Delhi, Kolkata, Bangalore, Chennai
 - Defect rates range from **0% to 14.9%** — huge variance between suppliers
 - Significant quality differences between warehouse locations
-
-### Quality and inspection
-- Only **22.9% of orders pass inspection** (2,595 out of 11,340)
-- **36.2% fail** (4,102 orders) — high failure rate requiring attention
-- **40.9% pending** (4,643 orders) — significant backlog
-
+  
 ### Logistics
 - 4 transport modes: Road, Air, Rail, Sea
 - 3 shipping routes: Route A, Route B, Route C
@@ -296,84 +362,6 @@ IF([Stockout Risk %] > 15, "Urgent",
 - Negative shipping costs found and flagged
 - Negative defect rates cleaned and clipped to 0
 - 24 misnamed columns remapped to correct semantic names
-
----
-
-## ⚙️ How to Run This Project
-
-### Prerequisites
-- Python 3.x
-- MySQL / MariaDB
-- Power BI Desktop
-- Jupyter Notebook (optional)
-
-### Step 1 — Clone the repository
-```bash
-git clone https://github.com/yourusername/supply-chain-analytics-end-to-end.git
-cd supply-chain-analytics-end-to-end
-```
-
-### Step 2 — Install Python dependencies
-```bash
-pip install pandas openpyxl sqlalchemy pymysql
-```
-
-### Step 3 — Set up MySQL
-```sql
-CREATE DATABASE supply_chain;
-```
-
-### Step 4 — Update credentials in loader script
-```python
-# python/load_to_mysql.py
-DB_USER     = "your_username"
-DB_PASSWORD = "your_password"
-DB_NAME     = "supply_chain"
-```
-
-### Step 5 — Run the ETL loader
-```bash
-cd python
-python load_to_mysql.py
-```
-
-### Step 6 — Run SQL analysis
-```
-Open sql/02_analysis_queries.sql in MySQL Workbench
-Run each query to explore the data
-```
-
-### Step 7 — Open Power BI dashboard
-```
-Open powerbi/SUPPLY_CHAIN.pbix in Power BI Desktop
-Refresh the data connection with your MySQL credentials
-```
-
----
-
-## 📸 Screenshots Needed
-
-Upload these screenshots to the `images/` folder:
-
-```
-images/schema/
-  star_schema_diagram.png     ← ERD sheet from Excel
-  powerbi_model.png           ← Power BI Model view (already have this!)
-
-images/sql/
-  python_etl_output.png       ← Jupyter notebook showing successful run
-  revenue_by_product.png      ← MySQL Workbench Q6 result
-  supplier_defect_rate.png    ← MySQL Workbench Q7 result
-  supplier_scorecard.png      ← MySQL Workbench Q14 result
-
-images/dashboard/
-  01_executive_summary.png    ← Power BI page 1 screenshot
-  02_supplier_scorecard.png   ← Power BI page 2 screenshot
-  03_quality_control.png      ← Power BI page 3 screenshot
-  04_logistics_analysis.png   ← Power BI page 4 screenshot
-  05_inventory_health.png     ← Power BI page 5 screenshot
-```
-
 ---
 
 ## 📚 Skills Demonstrated
@@ -389,16 +377,3 @@ images/dashboard/
 | Business Intelligence | KPI design, dashboard layout, slicer sync, bookmarks |
 
 ---
-
-## 👤 Author
-
-**Your Name**
-- LinkedIn: [your-linkedin-url]
-- GitHub: [your-github-url]
-- Email: your@email.com
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
