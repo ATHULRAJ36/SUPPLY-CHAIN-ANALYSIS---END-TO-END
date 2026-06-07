@@ -246,13 +246,11 @@ A fully normalized relational database with 7 tables, proper primary keys, forei
 ![Executive Summary](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/EXECUTIVE%20SUMMERY.png)
 
 **Visuals:**
-- 5 KPI cards — Total Revenue, Total Orders, Units Sold, Avg Price, Revenue per Order
+- 4 KPI  cards — Total Revenue, Total Orders, Units Sold, Total Stock Level
 - Revenue by product type — bar chart
 - Revenue by customer gender — column chart
 - Revenue share — donut chart
-- Revenue by supplier — bar chart with % labels
-- Revenue vs target — gauge visual
-- 4 synced slicers
+- 3 synced slicers
 
 **Key DAX measures:**
 ```dax
