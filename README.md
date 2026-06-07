@@ -2,8 +2,6 @@
 
 > **Complete analytics pipeline:** Raw Excel data → Data Cleaning → MySQL Database → SQL Analysis → Power BI Dashboard
 
-![Power BI Data Model](images/dashboard/powerbi_model.png)
-
 ---
 
 ## 📌 Project Overview
