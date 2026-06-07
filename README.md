@@ -266,12 +266,11 @@ Revenue per Order = DIVIDE([Total Revenue], COUNTROWS(orders))
 ![Supplier Scorecard](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLIER%20SCORECARD.png)
 
 **Visuals:**
-- 4 KPI cards — Total Suppliers, Best Supplier, Worst Defect Supplier, Avg Rating
-- Supplier defect rate ranking — color coded bar chart
-- Revenue by supplier — bar chart
-- Lead time by warehouse location — column chart
-- Full supplier scorecard matrix with conditional formatting
-- Supplier risk breakdown — donut chart
+- 3 KPI cards — Total Suppliers, Best Supplier, Avg Rating
+- quality score vs Defect rate
+- Avg logistic cost by supplier
+- Lead time by warehouse location 
+- Lead time by suppliers
 - 3 synced slicers
 
 **Key DAX measures:**
@@ -292,14 +291,12 @@ SWITCH(TRUE(),
 ![Logistics Analysis](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/LOGISTIC%20ANALYSIS.png)
 
 **Visuals:**
-- 5 KPI cards — Total Logistics Cost, Avg Shipping Cost, Cheapest Mode, Avg Mfg Lead Time, Slow Orders
+- 4 KPI cards — Total Logistics Cost, Avg Defect rate, Total Manufacturing rate, Total shipping Cost
 - Shipping cost by transport mode — color coded bar chart
 - Manufacturing cost by product — column chart
-- Route cost comparison — bar chart
-- Carrier performance matrix
-- Manufacturing lead time by location — column chart
-- Logistics cost share by mode — donut chart
-- 4 synced slicers
+- Route comparison — bar chart
+- Logistics cost by product
+- 3 synced slicers
 
 **Key DAX measures:**
 ```dax
@@ -319,11 +316,10 @@ SWITCH(TRUE(),
 ![Inventory Health](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/INVENTORY%20HEALTH.png)
 
 **Visuals:**
-- 4 KPI cards — Total Stock, Stockout Risk Orders, Avg Availability, Negative Availability
-- Stock levels by product — bar chart
-- Stock vs availability by supplier — clustered bar chart
-- Stockout risk breakdown — donut chart
-- Supplier stock rank — table with conditional formatting
+- 3 KPI cards — Total Stock, Stockout Risk Orders, Avg Availability
+- Stock levels by product 
+- Stock vs availability by supplier
+- Stock level by Location
 - 3 synced slicers
 
 **Key DAX measures:**
