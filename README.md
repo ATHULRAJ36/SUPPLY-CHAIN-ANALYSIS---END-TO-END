@@ -16,16 +16,13 @@ The project covers every stage of the analytics pipeline — from a messy, misna
 
 ## 🛠️ Tools and Technologies
 
-| Tool | Version | Purpose |
-|---|---|---|
-| Microsoft Excel | — | Data exploration and schema design |
-| Python | 3.x | Data cleaning and ETL automation |
-| pandas | — | DataFrame manipulation |
-| SQLAlchemy | — | Database ORM connection |
-| pymysql | — | MySQL driver |
-| MySQL | — | Relational database and SQL analysis |
-| Power BI Desktop | — | Interactive dashboard development |
-| DAX | — | Business intelligence measures |
+| Tool | Purpose |
+|---|---|
+| Microsoft Excel | Data exploration and schema design |
+| Python | Data cleaning and ETL automation |
+| MySQL | Relational database and SQL analysis |
+| Power BI Desktop | Interactive dashboard development |
+| DAX | Business intelligence measures |
 
 ---
 
