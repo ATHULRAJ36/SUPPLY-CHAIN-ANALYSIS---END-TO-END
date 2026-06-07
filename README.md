@@ -26,45 +26,7 @@ The project covers every stage of the analytics pipeline — from a messy, misna
 
 ---
 
-## 📁 Repository Structure
 
-```
-supply-chain-analytics-end-to-end/
-│
-├── README.md
-│
-├── data/
-│   ├── raw/
-│   │   └── SUPPLY_CHAIN_ANALYSIS.xlsx        ← original raw file (11,340 rows, 24 columns)
-│   └── cleaned/
-│       └── SUPPLY_CHAIN_DB_SCHEMA.xlsx        ← normalized star schema (7 sheets)
-│
-├── sql/
-│   ├── 01_create_tables.sql                   ← CREATE TABLE with PKs and FKs
-│   ├── 02_analysis_queries.sql                ← 14 analysis queries (beginner to advanced)
-│   └── 03_supplier_scorecard.sql              ← capstone scorecard query
-│
-├── python/
-│   └── load_to_mysql.py                       ← automated ETL loader script
-│
-├── powerbi/
-│   └── SUPPLY_CHAIN.pbix                      ← Power BI dashboard file
-│
-└── images/
-    ├── schema/
-    │   ├── star_schema_diagram.png
-    │   └── powerbi_model.png
-    ├── sql/
-    │   ├── revenue_by_product.png
-    │   ├── supplier_defect_rate.png
-    │   └── supplier_scorecard.png
-    └── dashboard/
-        ├── 01_executive_summary.png
-        ├── 02_supplier_scorecard.png
-        ├── 03_quality_control.png
-        ├── 04_logistics_analysis.png
-        └── 05_inventory_health.png
-```
 
 ---
 
@@ -91,9 +53,7 @@ supply-chain-analytics-end-to-end/
 
 ---
 
-## Part 1 — Excel Data Cleaning and Schema Design
-
-![Star Schema](images/schema/star_schema_diagram.png)
+## Part 1 — Excel Data Cleaning 
 
 ### Problems found in raw data
 - 24 columns with generic misnamed headers (`Product type.1`, `Price.1` etc.)
@@ -114,21 +74,11 @@ supply-chain-analytics-end-to-end/
 - Added surrogate foreign keys (`product_id`, `supplier_id`, `carrier_id`, `route_id`)
 - Built the ERD and schema notes sheet
 
-### Star schema design
-
-```
-dim: products   ─┐
-dim: suppliers  ─┤
-                 ├──► fact: orders ──► fact: inventory
-dim: carriers   ─┤              └───► fact: logistics
-dim: routes     ─┘
-```
-
 ---
 
 ## Part 2 — Python ETL Pipeline
 
-![Python ETL Success](images/sql/python_etl_output.png)
+![Python ETL Success]()
 
 ### Script: `load_to_mysql.py`
 
@@ -188,197 +138,7 @@ python load_to_mysql.py
   [OK] logistics  :  11,340 rows
 ```
 
----
-
-## Part 3 — MySQL Database Design
-
-![Power BI Data Model](images/schema/powerbi_model.png)
-
-### Database schema
-
-```sql
--- Dimension tables
-products  (product_id PK, product_type)
-suppliers (supplier_id PK, supplier_name, warehouse_location)
-carriers  (carrier_id PK, carrier)
-routes    (route_id PK, shipping_route, transportation_mode)
-
--- Fact tables
-orders    (order_id PK, product_id FK, supplier_id FK,
-           carrier_id FK, route_id FK, price, units_sold,
-           revenue, customer_gender, order_quantity,
-           lead_time_days, data_quality_flag)
-
-inventory (order_id PK FK, product_id FK, supplier_id FK,
-           availability, stock_levels)
-
-logistics (order_id PK FK, carrier_id FK, route_id FK,
-           shipping_cost, total_logistics_cost,
-           manufacturing_lead_time, manufacturing_cost,
-           inspection_quantity, inspection_result,
-           defect_rate, supplier_rating, quality_score)
-```
-
----
-
-## Part 4 — SQL Analysis
-
-14 queries across 3 difficulty levels.
-
-![Revenue by Product](images/sql/revenue_by_product.png)
-
-### Beginner — single table queries
-
-```sql
--- Q1. Total orders
-SELECT COUNT(*) AS total_orders FROM orders;
-
--- Q2. All product types
-SELECT product_id, product_type FROM products;
-
--- Q3. Orders where price > 80
-SELECT order_id, price, revenue
-FROM orders
-WHERE price > 80
-ORDER BY price DESC;
-
--- Q4. Unique inspection results
-SELECT DISTINCT inspection_result FROM logistics;
-
--- Q5. Orders by customer gender
-SELECT customer_gender, COUNT(*) AS total_orders
-FROM orders
-GROUP BY customer_gender;
-```
-
-### Intermediate — joins and aggregations
-
-```sql
--- Q6. Revenue by product type
-SELECT p.product_type,
-       SUM(o.revenue)    AS total_revenue,
-       AVG(o.price)      AS avg_price,
-       SUM(o.units_sold) AS total_units
-FROM orders o
-JOIN products p USING(product_id)
-GROUP BY p.product_type
-ORDER BY total_revenue DESC;
-
--- Q7. Supplier with lowest defect rate
-SELECT s.supplier_name,
-       s.warehouse_location,
-       ROUND(AVG(l.defect_rate), 4) AS avg_defect_rate
-FROM logistics l
-JOIN orders o    USING(order_id)
-JOIN suppliers s USING(supplier_id)
-GROUP BY s.supplier_name, s.warehouse_location
-ORDER BY avg_defect_rate ASC
-LIMIT 5;
-
--- Q8. Shipping cost by transport mode
-SELECT r.transportation_mode,
-       ROUND(AVG(l.shipping_cost), 2)        AS avg_shipping,
-       ROUND(AVG(l.total_logistics_cost), 2) AS avg_total_cost
-FROM logistics l
-JOIN routes r USING(route_id)
-GROUP BY r.transportation_mode
-ORDER BY avg_shipping;
-
--- Q9. Stockout risk orders
-SELECT o.order_id,
-       o.order_quantity,
-       i.stock_levels,
-       o.order_quantity - i.stock_levels AS shortage
-FROM orders o
-JOIN inventory i USING(order_id)
-WHERE o.order_quantity > i.stock_levels
-ORDER BY shortage DESC;
-
--- Q10. Inspection results with percentage
-SELECT inspection_result,
-       COUNT(*) AS total,
-       ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS pct
-FROM logistics
-GROUP BY inspection_result
-ORDER BY total DESC;
-```
-
-![Supplier Defect Rate](images/sql/supplier_defect_rate.png)
-
-### Advanced — CTEs and window functions
-
-```sql
--- Q11. Rank suppliers by revenue
-SELECT s.supplier_name,
-       ROUND(SUM(o.revenue), 2) AS total_revenue,
-       RANK() OVER (ORDER BY SUM(o.revenue) DESC) AS revenue_rank
-FROM orders o
-JOIN suppliers s USING(supplier_id)
-GROUP BY s.supplier_name
-ORDER BY revenue_rank;
-
--- Q12. Suppliers above average defect rate (CTE)
-WITH supplier_defects AS (
-  SELECT s.supplier_name,
-         AVG(l.defect_rate) AS avg_defect
-  FROM logistics l
-  JOIN orders o    USING(order_id)
-  JOIN suppliers s USING(supplier_id)
-  GROUP BY s.supplier_name
-),
-overall AS (
-  SELECT AVG(defect_rate) AS overall_avg FROM logistics
-)
-SELECT sd.supplier_name,
-       ROUND(sd.avg_defect, 4)  AS avg_defect,
-       ROUND(o.overall_avg, 4)  AS overall_avg
-FROM supplier_defects sd
-CROSS JOIN overall o
-WHERE sd.avg_defect > o.overall_avg
-ORDER BY sd.avg_defect DESC;
-
--- Q13. Top supplier per warehouse location
-WITH ranked AS (
-  SELECT s.supplier_name,
-         s.warehouse_location,
-         ROUND(SUM(o.revenue), 2) AS total_revenue,
-         RANK() OVER (
-           PARTITION BY s.warehouse_location
-           ORDER BY SUM(o.revenue) DESC
-         ) AS rnk
-  FROM orders o
-  JOIN suppliers s USING(supplier_id)
-  GROUP BY s.supplier_name, s.warehouse_location
-)
-SELECT supplier_name, warehouse_location, total_revenue
-FROM ranked WHERE rnk = 1
-ORDER BY total_revenue DESC;
-
--- Q14. Full supplier scorecard (capstone query)
-SELECT
-  s.supplier_name,
-  s.warehouse_location,
-  ROUND(SUM(o.revenue), 2)                    AS total_revenue,
-  ROUND(AVG(l.defect_rate), 4)                AS avg_defect_rate,
-  ROUND(AVG(l.quality_score), 2)              AS avg_quality_score,
-  ROUND(AVG(o.lead_time_days), 1)             AS avg_lead_time,
-  ROUND(AVG(l.manufacturing_cost), 2)         AS avg_mfg_cost,
-  SUM(l.inspection_result = 'Pass')           AS pass_count,
-  SUM(l.inspection_result = 'Fail')           AS fail_count,
-  ROUND(SUM(l.inspection_result = 'Pass')
-        * 100.0 / COUNT(*), 1)                AS pass_pct
-FROM orders o
-JOIN suppliers s  USING(supplier_id)
-JOIN logistics l  USING(order_id)
-GROUP BY s.supplier_name, s.warehouse_location
-ORDER BY total_revenue DESC;
-```
-
-![Supplier Scorecard Query](images/sql/supplier_scorecard.png)
-
----
-
-## Part 5 — Power BI Dashboard
+## Part 3 — Power BI Dashboard
 
 5-page interactive dashboard with **80+ DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
 
