@@ -239,6 +239,9 @@ A fully normalized relational database with 7 tables, proper primary keys, forei
 5-page interactive dashboard with **DAX measures**, conditional formatting, drill through, synced slicers and bookmark navigation.
 
 ## MODEL VIEW
+
+The Power BI data model is designed using a relational schema that integrates multiple supply chain entities, including Orders, Products, Suppliers, Inventory, Logistics, Routes, and Carriers. The Orders table serves as the central fact table, capturing transactional data such as order quantities, prices, lead times, and customer information. Dimension tables such as Products, Suppliers, Routes, and Carriers are connected through one-to-many relationships, enabling efficient filtering and analysis across the model. The Inventory table tracks stock levels and product availability by supplier, while the Logistics table contains operational metrics such as manufacturing cost, defect rate, inspection results, lead time, and quality scores. This star-schema-inspired design ensures data consistency, minimizes redundancy, and supports interactive Power BI dashboards for revenue analysis, supplier performance monitoring, logistics optimization, and inventory health tracking. The model enables seamless cross-functional analysis and provides a scalable foundation for data-driven supply chain decision-making.
+
 ![MODEL VIEW](https://github.com/ATHULRAJ36/SUPPLY-CHAIN-ANALYSIS---END-TO-END/blob/main/SUPPLY%20CHAIN%20ANALYSIS/REPORTS/MODEL%20VIEW.png)
 
 ### Page 1 — Executive Summary
